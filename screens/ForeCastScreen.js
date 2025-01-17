@@ -35,6 +35,10 @@ const ForecastScreen = ({ city, setMain }) => {
     void getWeather();
   }, []);
 
+  const sunriseTime = forecast ? new Date(forecast.sys.sunrise * 1000).toTimeString().split(" ")[0] : null;
+  const sunsetTime = forecast ? new Date(forecast.sys.sunset * 1000).toTimeString().split(" ")[0] : null;
+
+
   return (
     <LinearGradient colors={["#010810", "#54878B"]} style={styles.container}>
       {loading ? (
@@ -73,6 +77,13 @@ const ForecastScreen = ({ city, setMain }) => {
                 <Text style={styles.text}>
                   Швидкість вітру: {forecast.wind.speed} м/с
                 </Text>
+              </View>
+
+              <View style={styles.item}>
+                <Text style={styles.text}>Схід сонця: {sunriseTime}</Text>
+              </View>
+              <View style={styles.item}>
+                <Text style={styles.text}>Захід сонця: {sunsetTime}</Text>
               </View>
             </View>
           </View>
@@ -133,12 +144,13 @@ const styles = StyleSheet.create({
     marginBottom: -10,
   },
   itemsFlex: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 20,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap:20,
+    justifyContent:"center"
   },
   item: {
-    paddingHorizontal:10,
+    paddingHorizontal: 10,
     width: 145,
     height: 100,
     borderWidth: 2,
@@ -153,13 +165,13 @@ const styles = StyleSheet.create({
     fontSize: 17,
     textAlign: "center",
   },
-  loading:{
+  loading: {
     color: "white",
     fontSize: 30,
-    fontWeight:"bold",
+    fontWeight: "bold",
     textAlign: "center",
-    marginTop:"100%"
-  }
+    marginTop: "100%",
+  },
 });
 
 export default ForecastScreen;
